@@ -1,0 +1,7 @@
+{
+  "name": "isneha's Exam Planner",
+  "description": "A comprehensive study planner designed for isneha, featuring daily tasks, progress tracking, and an AI-powered study assistant to help with exam preparation from January 6th to February 5th.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
