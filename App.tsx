@@ -5,10 +5,10 @@ import {
   MessageCircle, ChevronRight, Menu, X, ArrowUpRight, CloudSync,
   Loader2, AlertCircle
 } from 'lucide-react';
-import { INITIAL_SCHEDULE, SUBJECT_COLORS } from './constants';
-import { DayPlan, StudyTask, UserStats } from './types';
-import { getStudyBuddyAdvice } from './services/geminiService';
-import { supabase } from './services/supabaseClient';
+import { INITIAL_SCHEDULE, SUBJECT_COLORS } from './constants.ts';
+import { DayPlan, StudyTask, UserStats } from './types.ts';
+import { getStudyBuddyAdvice } from './services/geminiService.ts';
+import { supabase } from './services/supabaseClient.ts';
 
 const App: React.FC = () => {
   const [schedule, setSchedule] = useState<DayPlan[]>([]);
@@ -63,9 +63,9 @@ const App: React.FC = () => {
       }
     } catch (err: any) {
       console.error("Supabase error:", err);
-      setError("Sync failed. Using local backup.");
+      setError("Sync failed. Check connection.");
       // Fallback to local storage if supabase fails
-      const saved = localStorage.getItem('sneha_study_planner_v1');
+      const saved = localStorage.getItem('isneha_study_planner_v1');
       if (saved) setSchedule(JSON.parse(saved));
       else setSchedule(INITIAL_SCHEDULE);
     } finally {
@@ -85,7 +85,7 @@ const App: React.FC = () => {
       // Update local state first for snappy UI
       newSchedule[dayIndex].tasks[taskIndex].completed = newStatus;
       setSchedule(newSchedule);
-      localStorage.setItem('sneha_study_planner_v1', JSON.stringify(newSchedule));
+      localStorage.setItem('isneha_study_planner_v1', JSON.stringify(newSchedule));
 
       // Sync to Supabase
       setIsSyncing(true);
@@ -169,7 +169,8 @@ const App: React.FC = () => {
         <div className="bg-amber-500 text-white text-[10px] py-1 px-4 text-center flex items-center justify-center gap-2 sticky top-0 z-[100]">
           <AlertCircle className="w-3 h-3" />
           {error}
-          <button onClick={() => setError(null)} className="ml-2 underline font-bold">Dismiss</button>
+          <button onClick={() => fetchData()} className="ml-2 underline font-bold">Retry Sync</button>
+          <button onClick={() => setError(null)} className="ml-2 underline">Dismiss</button>
         </div>
       )}
 
@@ -209,7 +210,7 @@ const App: React.FC = () => {
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                   <BookOpen className="w-4 h-4 text-white" />
                 </div>
-                Planner Hub
+                isneha's Hub
               </h1>
               <button onClick={() => setSidebarOpen(false)} className="md:hidden p-2 rounded-xl hover:bg-slate-100">
                 <X className="w-6 h-6 text-slate-500" />
@@ -333,7 +334,7 @@ const App: React.FC = () => {
                 <div className="relative z-10">
                   <h3 className="text-3xl font-black mb-5 leading-tight">Exam Season Ready!</h3>
                   <p className="text-blue-100 text-lg max-w-xl mb-10 font-medium leading-relaxed">
-                    You're crushing your goals. Keep the momentum high as we approach Phase 2. Remember, consistency is the key to excellence.
+                    isneha, you're crushing your goals. Keep the momentum high as we approach Phase 2.
                   </p>
                   <button 
                     onClick={() => setActiveTab('daily')}

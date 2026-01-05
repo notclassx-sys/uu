@@ -1,5 +1,5 @@
 
-import { DayPlan, Subject, StudyTask } from './types';
+import { DayPlan, Subject, StudyTask } from './types.ts';
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
